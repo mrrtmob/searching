@@ -1,6 +1,5 @@
 const express = require('express')
 const { Client } = require('@elastic/elasticsearch')
-const { getEmbedding } = require('./embedding')
 const { server } = require('./routes/route')
 const app = express()
 const port = 3000
@@ -8,6 +7,7 @@ const port = 3000
 // Connect to your Elasticsearch instance
 const client = new Client({ node: 'http://localhost:9200' })
 
+app.use(cors());
 // Middleware to parse JSON requests
 app.use(express.json())
 
