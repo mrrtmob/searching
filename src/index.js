@@ -9,7 +9,7 @@ const client = new Client({ node: 'http://localhost:9200' })
 // Middleware to set the Access-Control-Allow-Origin header
 app.use((req, res, next) => {
     // Allow requests only from localhost
-    res.setHeader('Access-Control-Allow-Origin', '*'); // add the port if it's not on default (e.g., http://localhost:3000)
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4000'); // add the port if it's not on default (e.g., http://localhost:3000)
     // Set other CORS headers if needed
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
