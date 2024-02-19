@@ -2,13 +2,19 @@ const express = require('express')
 const { Client } = require('@elastic/elasticsearch')
 const { server } = require('./routes/route')
 const app = express()
-const cors = require('cors');
 const port = 3000
 
 // Connect to your Elasticsearch instance
 const client = new Client({ node: 'http://localhost:9200' })
-
-app.use(cors());
+// Middleware to set the Access-Control-Allow-Origin header
+app.use((req, res, next) => {
+    // Allow requests only from localhost
+    res.setHeader('Access-Control-Allow-Origin', '*'); // add the port if it's not on default (e.g., http://localhost:3000)
+    // Set other CORS headers if needed
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    next();
+});
 // Middleware to parse JSON requests
 app.use(express.json())
 
