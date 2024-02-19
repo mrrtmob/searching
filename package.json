@@ -1,0 +1,32 @@
+{
+  "name": "searching",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrrtmob/searching.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mrrtmob/searching/issues"
+  },
+  "homepage": "https://github.com/mrrtmob/searching#readme",
+  "dependencies": {
+    "@elastic/elasticsearch": "^8.12.0",
+    "axios": "^1.6.7",
+    "docxtemplater": "^3.45.0",
+    "dotenv": "^16.4.4",
+    "express": "^4.18.2",
+    "jszip": "^3.10.1",
+    "mammoth": "^1.6.0",
+    "mariadb": "^3.2.3",
+    "openai": "^4.26.1",
+    "sequelize": "^6.37.1",
+    "tough-cookie": "^4.1.3"
+  }
+}
