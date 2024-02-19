@@ -2,6 +2,7 @@ const express = require('express')
 const { Client } = require('@elastic/elasticsearch')
 const { server } = require('./routes/route')
 const app = express()
+const cors = require('cors');
 const port = 3000
 
 // Connect to your Elasticsearch instance
