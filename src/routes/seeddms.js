@@ -12,7 +12,7 @@ const seeddms = (app) => {
         catch (e) {
             res.status(400).json({
                 code: 400,
-                message: "something went wrong!"
+                message: e
             })
         }
     })
