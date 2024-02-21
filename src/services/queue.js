@@ -48,7 +48,6 @@ const QueueService = {
     dequeue: async function () {
         try {
             const task = await QueueItem.findOne({ where: { status: 'pending' } });
-            console.log(task.dataValues.data)
             if (task) {
                 await task.update({ status: 'processing' });
 
