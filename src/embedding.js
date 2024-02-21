@@ -3,7 +3,7 @@ const OpenAI = require("openai");
 
 
 const openai = new OpenAI({
-    apiKey: "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"
+    apiKey: "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"
 });
 async function getEmbedding(text) {
     try {
