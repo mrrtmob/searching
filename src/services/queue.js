@@ -48,11 +48,11 @@ const QueueService = {
     dequeue: async function () {
         try {
             const task = await QueueItem.findOne({ where: { status: 'pending' } });
-            console.log(task)
+            console.log(task.dataValues.data)
             if (task) {
                 await task.update({ status: 'processing' });
 
-                const taskPath = task
+                const taskPath = task.dataValues.data
                 const filePath = path + taskPath.dir + taskPath.version
                 const temDir = 'tmp'
                 const libreOfficeCommand = `libreoffice --headless --convert-to html ${filePath + taskPath.fileType} --outdir ${temDir}`;
