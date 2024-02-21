@@ -58,6 +58,11 @@ const Document = sequelize.define('Document', {
         type: DataTypes.DOUBLE,
         allowNull: false,
         defaultValue: 0
+    },
+    content: {
+        type: DataTypes.TEXT('long'),
+        allowNull: true,
+        defaultValue: null
     }
 }, {
     tableName: 'tblDocuments', 

@@ -3,7 +3,9 @@ const { Document } = require("../models/document_model")
 const seeddms = (app) => {
     app.get('/api/documents', async (req, res) => {
         try {
-            const response = await Document.findAll()
+            const response = await Document.findAll({
+                attributes: { exclude: ['content'] }
+            })
             res.status(200).json({
                 code: 200,
                 data: response

@@ -1,6 +1,8 @@
 const { getEmbedding } = require("../embedding")
 const { Client } = require('@elastic/elasticsearch')
+const { Document } = require("../models/document_model")
 const client = new Client({ node: 'http://localhost:9200' })
+const { Op } = require('sequelize');
 
 const search = (app) => {
     // Define a route for Elasticsearch queries
@@ -44,11 +46,12 @@ const search = (app) => {
     })
 
     // Vector-based search route
-    app.get('/vector-search', async (req, res) => {
-        const { search } = req.query // Assume title and description are provided for generating the query vector
+    app.get('/api/vector-search', async (req, res) => {
+        const { search } = req.query
+        console.log(search)
         try {
             const queryVector = await getEmbedding(search) // Get embedding for the concatenated text
-
+            console.log(queryVector)
             const response = await client.search({
                 index: "test_vector",
                 body: {
@@ -70,16 +73,30 @@ const search = (app) => {
                         }
                     },
                     _source: {
-                        excludes: ["vector"]
+                        excludes: ["vector", "text"]
                     },
                     // min_score: 1.8
                 },
             })
-            console.log(response)
-            res.json(response.hits.hits)
+            const data = response.hits.hits
+            console.log(data)
+            let arrId = []
+            for (let i = 0; i < data.length; i++) {
+                arrId.push(data[i]._source.id)
+            }
+            console.log(arrId)
+            const document = await Document.findAll({
+                where: {
+                    id: {
+                        [Op.in]: arrId
+                    }
+                },
+                attributes: { exclude: ['content'] }
+            })
+            res.status(200).json({ code: 200, data: document })
         } catch (error) {
             console.error(error) // Log any errors
-            res.status(500).json({ error: error.message })
+            res.status(500).json({ error: error })
         }
     })
     // Route for uploading documents
@@ -102,17 +119,16 @@ const search = (app) => {
     // Route for uploading documents
     app.post('/upload-vector', async (req, res) => {
         const { document } = req.body
-        document.vector = await getEmbedding(`title: ${document.title}
-    description: ${document.description}
-    `)
         try {
+            document.vector = await getEmbedding(`${document.text}`)
+            console.log(document)
             const response = await client.index({
                 index: 'test_vector',
                 body: document,
                 refresh: 'true',
             })
             console.log(response)
-            res.json({ result: 'created', _id: response.body })
+            res.json({ result: response, _id: response.body })
         } catch (error) {
             console.error(error)
             res.status(500).json({ error: error.message })
