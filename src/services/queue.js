@@ -52,7 +52,7 @@ const QueueService = {
             if (task) {
                 await task.update({ status: 'processing' });
 
-                const taskPath = task.dataValues.data
+                const taskPath = task
                 const filePath = path + taskPath.dir + taskPath.version
                 const temDir = 'tmp'
                 const libreOfficeCommand = `libreoffice --headless --convert-to html ${filePath + taskPath.fileType} --outdir ${temDir}`;
